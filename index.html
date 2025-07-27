@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allan Aloe | Ethical Hacker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+        }
+        
+        .neon-box {
+            box-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .neon-border {
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00, inset 0 0 10px #00ff00;
+        }
+        
+        .neon-hover:hover {
+            text-shadow: 0 0 5px #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        
+        .typing {
+            border-right: 3px solid #00ff00;
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00ff00, 0 0 20px #00ff00;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 15px #00ff88, 0 0 20px #00ff88, 0 0 25px #00ff88;
+            }
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+        
+        .terminal-header {
+            background-color: #00ff00;
+            color: #000;
+        }
+        
+        .terminal-cursor {
+            animation: blink 1s step-end infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background Animation -->
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-black bg-opacity-90 z-50 border-b border-green-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-green-500 font-bold text-xl">ALOE</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium neon-hover">HOME</a>
+                        <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium neon-hover">ABOUT</a>
+                        <a href="#projects" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium neon-hover">PROJECTS</a>
+                        <a href="#philosophy" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium neon-hover">PHILOSOPHY</a>
+                        <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium neon-hover">CONTACT</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 border-t border-green-500 border-opacity-30">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-green-400 block px-3 py-2 rounded-md text-base font-medium">HOME</a>
+                <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">ABOUT</a>
+                <a href="#projects" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">PROJECTS</a>
+                <a href="#philosophy" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">PHILOSOPHY</a>
+                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 neon-text glow">Allan Aloe</h1>
+            <h2 class="text-2xl md:text-3xl mb-8 text-green-400 typing" id="typing-text">_</h2>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#projects" class="px-8 py-3 bg-transparent border-2 border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-black transition duration-300 font-bold neon-hover">Explore My Work</a>
+                <a href="#" class="px-8 py-3 bg-green-500 text-black rounded-md hover:bg-green-600 transition duration-300 font-bold neon-hover">Download Resume</a>
+                <a href="#contact" class="px-8 py-3 bg-transparent border-2 border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-black transition duration-300 font-bold neon-hover">Hire Me</a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-0 right-0 text-center">
+            <a href="#about" class="text-green-400 animate-bounce">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-black bg-opacity-70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 neon-text">WHO AM I?</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-xl mb-6 text-green-400">"I'm Allan Aloe — a hacker, designer, and digital architect. I'm a cybersecurity technologist with a passion for creativity. When I'm not finding vulnerabilities, I'm building pixel-perfect websites and designing stunning visuals."</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center"><i class="fas fa-map-marker-alt text-blue-400 mr-2"></i> Based in Malawi</div>
+                        <div class="flex items-center"><i class="fas fa-rocket text-purple-400 mr-2"></i> Founder of cybeX5</div>
+                        <div class="flex items-center"><i class="fas fa-code text-green-400 mr-2"></i> 6+ years in web dev</div>
+                        <div class="flex items-center"><i class="fas fa-paint-brush text-yellow-400 mr-2"></i> Digital artist</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="p-6 neon-border rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-green-400">TOOLKIT</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="text-blue-400 mb-2"><i class="fas fa-shield-alt mr-2"></i> Cybersecurity</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>Penetration Testing</li>
+                                    <li>Malware Analysis</li>
+                                    <li>DDoS Simulations</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-purple-400 mb-2"><i class="fas fa-code mr-2"></i> Web Dev</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>HTML/CSS/JS</li>
+                                    <li>React</li>
+                                    <li>Flask</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-yellow-400 mb-2"><i class="fas fa-palette mr-2"></i> Design</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>Photoshop</li>
+                                    <li>Figma</li>
+                                    <li>Illustrator</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 neon-text">MY PROJECTS</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-gray-900 rounded-lg overflow-hidden transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-green-900 flex items-center justify-center mr-3">
+                                <i class="fas fa-wifi text-green-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-green-400">WiFi Phishing + OTP Hijack</h3>
+                        </div>
+                        <p class="mb-4">A fake access point tool that captures WhatsApp OTPs using cloned login pages. Ethical use only for security testing.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs bg-green-900 text-green-400 px-2 py-1 rounded">CYBERSECURITY</span>
+                            <a href="#" class="text-green-400 hover:text-green-300 flex items-center">
+                                View Code <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-gray-900 rounded-lg overflow-hidden transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center mr-3">
+                                <i class="fas fa-server text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-blue-400">cybeX5 DDoS Stress Tester</h3>
+                        </div>
+                        <p class="mb-4">A testing tool that allows networks to simulate DDoS conditions and check their stability under extreme loads.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs bg-blue-900 text-blue-400 px-2 py-1 rounded">NETWORK SECURITY</span>
+                            <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                                View Code <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-gray-900 rounded-lg overflow-hidden transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-purple-900 flex items-center justify-center mr-3">
+                                <i class="fas fa-robot text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-purple-400">ReportIt Malawi Bot</h3>
+                        </div>
+                        <p class="mb-4">A WhatsApp bot built for emergency reporting (fire, theft, medical), complete with location sharing and chatbot intelligence.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs bg-purple-900 text-purple-400 px-2 py-1 rounded">SOCIAL GOOD</span>
+                            <a href="#" class="text-purple-400 hover:text-purple-300 flex items-center">
+                                View Code <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-black bg-opacity-70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 neon-text">SERVICES I OFFER</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 neon-border rounded-lg hover:bg-gray-900 transition duration-300">
+                    <div class="text-4xl text-green-500 mb-4"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-green-400">Website Design & Dev</h3>
+                    <p class="text-gray-300">Custom, responsive websites with clean code and modern design.</p>
+                </div>
+                <div class="p-6 neon-border rounded-lg hover:bg-gray-900 transition duration-300">
+                    <div class="text-4xl text-blue-500 mb-4"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-blue-400">Security Testing</h3>
+                    <p class="text-gray-300">Comprehensive vulnerability assessments and penetration tests.</p>
+                </div>
+                <div class="p-6 neon-border rounded-lg hover:bg-gray-900 transition duration-300">
+                    <div class="text-4xl text-purple-500 mb-4"><i class="fas fa-paint-brush"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-purple-400">Branding & Design</h3>
+                    <p class="text-gray-300">Visual identity, logos, and marketing materials that stand out.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-20 bg-black bg-opacity-70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-16 neon-text">PHILOSOPHY</h2>
+            <div class="max-w-3xl mx-auto">
+                <blockquote class="text-2xl italic mb-8 text-green-400">
+                    "I don't hack for fame. I hack for purpose."
+                </blockquote>
+                <blockquote class="text-2xl italic mb-8 text-blue-400">
+                    "Fear the one who protects you by thinking like your enemy."
+                </blockquote>
+                <p class="text-lg">
+                    In cybersecurity, understanding the attacker's mindset is the first step to building effective defenses. 
+                    My work is guided by ethical principles and a commitment to making the digital world safer for everyone.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 neon-text">REACH ME IN THE DARKNET (OR JUST EMAIL ME)</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-4 text-green-400">CONTACT INFO</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-green-500 mr-3 text-xl"></i>
+                                <span>contact@allanaloe.tech</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-green-500 mr-3 text-xl"></i>
+                                <span>+265 xxx xxx xxx</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fab fa-github text-green-500 mr-3 text-xl"></i>
+                                <a href="#" class="hover:text-green-400">github.com/allanaloe</a>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fab fa-linkedin text-green-500 mr-3 text-xl"></i>
+                                <a href="#" class="hover:text-green-400">linkedin.com/in/allanaloe</a>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-key text-green-500 mr-3 text-xl"></i>
+                                <a href="#" class="hover:text-green-400">PGP Key</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button id="terminal-btn" class="px-6 py-3 bg-transparent border-2 border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-black transition duration-300 font-bold neon-hover">
+                        <i class="fas fa-terminal mr-2"></i> Open Terminal
+                    </button>
+                </div>
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
+                            <input type="text" id="name" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                            <input type="email" id="email" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
+                            <textarea id="message" rows="4" class="mt-1 block w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full px-6 py-3 bg-green-500 text-black rounded-md hover:bg-green-600 transition duration-300 font-bold neon-hover">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Terminal Popup -->
+    <div id="terminal" class="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-3xl h-96 hidden terminal">
+        <div class="terminal-header px-4 py-2 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div class="text-sm font-bold">Terminal</div>
+            <button id="close-terminal" class="text-black hover:text-gray-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4 h-full overflow-y-auto" id="terminal-content">
+            <div class="mb-2">Last login: <span id="terminal-date"></span> from 192.168.1.1</div>
+            <div class="mb-2">Aloe@terminal:~$ <span id="terminal-command" class="terminal-cursor">_</span></div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="py-8 bg-black border-t border-green-900 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-400 hover:text-green-400">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-green-400">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-green-400">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-green-400">
+                    <i class="fab fa-hacker-news text-xl"></i>
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm">Made with  ⚡ by Allan Aloe</p>
+            <p class="text-gray-500 text-sm mt-1">Founder of cybeX5 | Hacker | Designer | Developer</p>
+            <p class="text-gray-500 text-sm mt-1">© 2025 - All rights secured</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+        
+        const alphabet = katakana + latin + nums + symbols;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        // Typing effect
+        const phrases = [
+            "I'm Allan Aloe — a hacker, designer, and digital architect.",
+            "I find vulnerabilities.",
+            "I build beautiful websites.",
+            "I create stunning visuals.",
+            "I solve digital problems."
+        ];
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let isDeleting = false;
+        let isEnd = false;
+        
+        function type() {
+            const typingText = document.getElementById('typing-text');
+            const fullText = phrases[currentPhrase];
+            
+            if (isDeleting) {
+                typingText.textContent = fullText.substring(0, currentChar - 1);
+                currentChar--;
+            } else {
+                typingText.textContent = fullText.substring(0, currentChar + 1);
+                currentChar++;
+            }
+            
+            if (!isDeleting && currentChar === fullText.length) {
+                isEnd = true;
+                setTimeout(() => {
+                    isDeleting = true;
+                }, 1500);
+            } else if (isDeleting && currentChar === 0) {
+                isDeleting = false;
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+            }
+            
+            const speedUp = Math.random() * 50 + 50;
+            const normalSpeed = 150;
+            const time = isEnd ? 2000 : isDeleting ? speedUp : normalSpeed;
+            
+            setTimeout(type, time);
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Terminal simulation
+        const terminalBtn = document.getElementById('terminal-btn');
+        const terminal = document.getElementById('terminal');
+        const closeTerminal = document.getElementById('close-terminal');
+        const terminalContent = document.getElementById('terminal-content');
+        const terminalCommand = document.getElementById('terminal-command');
+        const terminalDate = document.getElementById('terminal-date');
+        
+        // Set current date
+        const now = new Date();
+        terminalDate.textContent = now.toLocaleString();
+        
+        terminalBtn.addEventListener('click', () => {
+            terminal.classList.remove('hidden');
+            simulateTerminal();
+        });
+        
+        closeTerminal.addEventListener('click', () => {
+            terminal.classList.add('hidden');
+        });
+        
+        function simulateTerminal() {
+            const commands = [
+                'whoami',
+                'ls -la',
+                'cd projects',
+                'nmap -sS 192.168.1.1',
+                'hydra -l admin -P passlist.txt ftp://192.168.1.1',
+                'sudo metasploit'
+            ];
+            
+            let currentCommand = 0;
+            let commandChars = 0;
+            let isTyping = true;
+            
+            function typeCommand() {
+                if (isTyping) {
+                    if (commandChars < commands[currentCommand].length) {
+                        terminalCommand.textContent = commands[currentCommand].substring(0, commandChars + 1);
+                        commandChars++;
+                        setTimeout(typeCommand, 100 + Math.random() * 50);
+                    } else {
+                        isTyping = false;
+                        setTimeout(() => {
+                            // Add command output
+                            const output = document.createElement('div');
+                            output.className = 'mb-2 text-green-400';
+                            
+                            switch(currentCommand) {
+                                case 0:
+                                    output.textContent = 'allan_aloe';
+                                    break;
+                                case 1:
+                                    output.textContent = 'total 32\ndrwxr-xr-x  5 aloe aloe  4096 Jun 10 14:30 .\ndrwxr-xr-x 18 aloe aloe  4096 Jun  5 09:12 ..\n-rw-------  1 aloe aloe  4096 Jun 10 14:30 .bash_history\n-rw-r--r--  1 aloe aloe   220 Jun  5 09:12 .bash_logout\n-rw-r--r--  1 aloe aloe  3771 Jun  5 09:12 .bashrc\ndrwx------  2 aloe aloe  4096 Jun  5 09:12 .cache\ndrwx------  3 aloe aloe  4096 Jun  5 09:12 .gnupg\n-rw-r--r--  1 aloe aloe   807 Jun  5 09:12 .profile';
+                                    break;
+                                case 2:
+                                    output.textContent = '';
+                                    break;
+                                case 3:
+                                    output.textContent = 'Starting Nmap 7.80 ( https://nmap.org ) at 2023-06-10 14:32 EDT\nNmap scan report for 192.168.1.1\nHost is up (0.0023s latency).\nNot shown: 996 closed ports\nPORT     STATE SERVICE\n22/tcp   open  ssh\n80/tcp   open  http\n443/tcp  open  https\n8080/tcp open  http-proxy\n\nNmap done: 1 IP address (1 host up) scanned in 1.23 seconds';
+                                    break;
+                                case 4:
+                                    output.textContent = 'Hydra v9.1 (c) 2020 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.\n\n[ATTEMPT] target ftp://192.168.1.1 - login "admin" - pass "password" - 1 of 5 [child 0]\n[STATUS] attack finished for 192.168.1.1 (waiting for children to complete tests)\n1 of 1 target successfully completed, 0 valid password found';
+                                    break;
+                                case 5:
+                                    output.textContent = 'msf6 >';
+                                    break;
+                            }
+                            
+                            terminalContent.appendChild(output);
+                            
+                            // Scroll to bottom
+                            terminalContent.scrollTop = terminalContent.scrollHeight;
+                            
+                            // Prepare for next command
+                            currentCommand = (currentCommand + 1) % commands.length;
+                            commandChars = 0;
+                            isTyping = true;
+                            
+                            // Add new command line
+                            const newLine = document.createElement('div');
+                            newLine.className = 'mb-2';
+                            newLine.innerHTML = 'Aloe@terminal:~$ <span id="terminal-command" class="terminal-cursor">_</span>';
+                            terminalContent.appendChild(newLine);
+                            terminalCommand = document.getElementById('terminal-command');
+                            
+                            // Continue typing
+                            setTimeout(typeCommand, 500);
+                        }, 1000);
+                    }
+                }
+            }
+            
+            typeCommand();
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Start typing effect
+        setTimeout(type, 1000);
+        
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
